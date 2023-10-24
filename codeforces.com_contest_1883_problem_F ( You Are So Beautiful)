@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+#include<stdio.h>
+using namespace std;
+typedef long long ll;
+#define endl "\n"
+#define pb push_back
+#define ppb pop_back
+#define for0(n) for(int i=0;i<n;i++)
+#define for1(n) for(int i=1;i<=n;i++)
+#define for0j(n) for(int j=0;j<n;j++)
+#define for1j(n) for(int j=1;j<=n;j++)
+#define all(x) (x).begin(), (x).end()
+#define vl vector <ll>
+#define MOD 1000000007
+#define INF 1e18
+#define mp make_pair
+#define MEM(a,x) memset(a,x,sizeof(a))
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> 
+
+void speed(){
+	ios::sync_with_stdio(0);
+    cin.tie(0);
+}
+void file(){
+	#ifndef ONLINE_JUDGE
+	    freopen("input.txt","r",stdin);
+	    freopen("output.txt","w",stdout);
+	#endif
+}
+
+//--------------------------###--------------------------------//
+//solution here
+
+void solve(ll t){
+	ll n;
+	cin>>n;
+	ll arr[n];
+	for0(n) cin>>arr[i];
+
+	map<ll,ll> prefix;
+	map<ll,ll> sufix;
+
+	for0(n){
+		if(prefix.find(arr[i])==prefix.end()){
+			prefix.insert({arr[i],i});
+		}
+		else{
+			prefix[arr[i]]=i;
+		}
+	}
+	for(int i = n-1;i>=0;i--){
+		if(sufix.find(arr[i])==sufix.end()){
+			sufix.insert({arr[i],i});
+		}
+		else{
+			sufix[arr[i]]=i;
+		}
+	}
+
+
+
+
+	vector<ll> firstP(n+1,0);
+	vector<ll> lastP(n+1,0);
+	
+	for0(n){
+		if(prefix[arr[i]]==i) lastP[i+1]++;
+
+		if(sufix[arr[i]]==i) firstP[i+1]++;
+
+		lastP[i+1] += lastP[i];
+	}
+
+	ll ans = 0;
+
+	for1(n){
+
+		if(firstP[i]>0) ans += lastP[n] - lastP[i-1];
+
+	}
+
+	cout<<ans<<endl;
+}
+
+
+int main(){
+	speed(); 
+	 file();
+	ll t=1, T=1;
+	cin>>T;
+
+	while(t<=T){
+		// cout<<"Case "<<t<<": ";
+		solve(t);
+		t++;
+	} 
+	return 0;
+}
+

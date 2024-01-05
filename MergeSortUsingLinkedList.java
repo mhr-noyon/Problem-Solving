@@ -1,105 +1,103 @@
-package mergesortusinglinkedlist;
+package margesort;
 import java.util.*;
 
-class nodes{
-    int data;
-    nodes next = null;
+class Node{
+    int value;
+    Node next = null;
 }
 
 public class MergeSortUsingLinkedList {
-     static void merge(nodes curnodes,int l, int mid, int r){
+     static void merge(Node curNode,int l, int mid, int r){
         int lsize = mid - l + 1;
         int rsize = r - mid;
-        nodes leftHead = null;        
-        nodes rightHead = null;          
+        Node leftHead = null;        
+        Node rightHead = null;          
   
         int ind = 1;
         while(ind!=l){
-            curnodes = curnodes.next;
+            curNode = curNode.next;
             ind++;
         }
-        nodes actualnodes = curnodes;
+        Node actualNode = curNode;
         
-        nodes prev = null; 
+        Node prev = null; 
         for(int i=l; i<=mid ; i++){
-            nodes newnodes = new nodes();
-            newnodes.data = actualnodes.data;               
-            newnodes.next = null;    
+            Node newNode = new Node();
+            newNode.value = actualNode.value;               
+            newNode.next = null;    
             
-            if(i==l) leftHead = newnodes;
-            else prev.next = newnodes;
-            actualnodes = actualnodes.next;
-            prev = newnodes;
+            if(i==l) leftHead = newNode;
+            else prev.next = newNode;
+            actualNode = actualNode.next;
+            prev = newNode;
         }
         prev = null;
         for(int i=mid+1; i<=r ; i++){
-            nodes newnodes = new nodes();
-            newnodes.data = actualnodes.data;                
-            newnodes.next = null;    
+            Node newNode = new Node();
+            newNode.value = actualNode.value;                
+            newNode.next = null;    
              
-            if(i==mid+1) rightHead = newnodes;
-            else prev.next = newnodes;
-            actualnodes = actualnodes.next;
-            prev = newnodes;
-        }
-        
+            if(i==mid+1) rightHead = newNode;
+            else prev.next = newNode;
+            actualNode = actualNode.next;
+            prev = newNode;
+        }        
         
         while(leftHead!=null && rightHead!=null){
-            if(leftHead.data<rightHead.data){
-                curnodes.data = leftHead.data;
+            if(leftHead.value<rightHead.value){
+                curNode.value = leftHead.value;
                 leftHead = leftHead.next;
             }
             else{
-                curnodes.data = rightHead.data;
+                curNode.value = rightHead.value;
                 rightHead = rightHead.next;
             }
-            curnodes = curnodes.next;
+            curNode = curNode.next;
         }
         while(leftHead!=null){
-            curnodes.data = leftHead.data;
+            curNode.value = leftHead.value;
             leftHead = leftHead.next;
-            curnodes = curnodes.next;
+            curNode = curNode.next;
         }
         while(rightHead!=null){
-            curnodes.data =  rightHead.data;
+            curNode.value =  rightHead.value;
             rightHead = rightHead.next;
-            curnodes = curnodes.next;
+            curNode = curNode.next;
         }
     }
-     static void mergeSort(nodes curnodes,int l,int r){
+     static void mergeSort(Node curNode,int l,int r){
         if(l==r) return;
         int mid = (l+r)/2;
-        mergeSort(curnodes,l,mid);        
-        mergeSort(curnodes,mid+1,r);
-        merge(curnodes,l,mid,r);
+        mergeSort(curNode,l,mid);        
+        mergeSort(curNode,mid+1,r);
+        merge(curNode,l,mid,r);
     }
     public static void main(String[] args) {
-        // TODO code application logic here
         Scanner in = new Scanner(System.in);
         System.out.print("Number of inputs: ");
         int n = in.nextInt();
         int[] arr= new int[n];
-        System.out.print("Input datas: ");
+        System.out.println("Input values: ");
         
         
-        nodes head = null;        
-        nodes prev = null;
+        Node head = null;        
+        Node prev = null;
 
         for(int i=0;i<n;i++){
-            nodes newnodes = new nodes();
-            newnodes.data = in.nextInt();
-            newnodes.next = null;
+            Node newnode = new Node();
+            newnode.value = in.nextInt();
+            newnode.next = null;
             if(i==0){
-                head = newnodes;
+                head = newnode;
             }
-            else prev.next = newnodes;
-            prev = newnodes;
+            else prev.next = newnode;
+            prev = newnode;
         }
         mergeSort(head,1,n);
         System.out.print("Sorted array -> ");
-        nodes temp = head;
+        Node temp = head;
         while(temp!=null){
-            System.out.print(temp.data+" ");
+            System.out.print(temp.value+" ");
             temp = temp.next;
         }
         System.out.println("\n");

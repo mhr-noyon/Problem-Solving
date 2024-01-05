@@ -29,7 +29,7 @@ public class detectCycleUsingKruskal {
         int V, E;
         System.out.print("Enter number of vertices: ");
         V = in.nextInt();
-        System.out.print("Enter number of vertices: ");
+        System.out.print("Enter number of edges: ");
         E = in.nextInt();
         
         System.out.println("Input graph (u <-> v: weight) ");

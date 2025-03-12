@@ -1,0 +1,44 @@
+class Solution {
+    public:
+        int findUnsortedSubarray(vector<int>& nums) {
+            int n = nums.size();
+            int mxInd = 1, mnInd = 0;
+            stack<int> stk;
+
+            vector<int> nextBig(n+3, 0);
+            for(int i=0;i<n;i++){
+                while(!stk.empty() && nums[stk.top()]<=nums[i]){
+                    nextBig[i+1]++;
+                    (nextBig[i+1]>1) ? mxInd = i+1 : mxInd = mxInd;
+                    stk.pop();
+                }
+                stk.push(i);
+            }
+            while(!stk.empty()){
+                nextBig[n+1]++;
+                (nextBig[n+1]>1) ? mxInd = n+1 : mxInd = mxInd;
+                stk.pop();
+            }
+
+
+            vector<int> prevSmall(n+2, 0);
+            for(int i=n-1;i>=0;i--){
+                while(!stk.empty() && nums[stk.top()]>=nums[i]){
+                    prevSmall[i+1]++;
+                    (prevSmall[i+1]>1) ? mnInd = i+1: mnInd = mnInd;
+                    stk.pop();
+                }
+                stk.push(i);
+            }
+            int i = 0;
+            while(!stk.empty()){
+                prevSmall[0]++;
+                (prevSmall[0]>1) ? mnInd = 0 : mnInd = mnInd;
+                stk.pop();
+            }
+
+
+            cerr<<mxInd-mnInd-1<<endl;
+            return mxInd-mnInd-1;
+        }
+    };
